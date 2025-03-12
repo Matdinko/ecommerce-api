@@ -3,9 +3,11 @@ import { addProductValidator } from "../validators/products.js";
 
 export const addProduct = async (req, res, next) => {
     try {
-        // Upload product image
         // Validate product information
-        const { error, value } = addProductValidator.validate(req.body, { abortEarly:false });
+        const { error, value } = addProductValidator.validate({
+            ...req.body,
+            image: req.file.filename
+        });
         if (error) {
             return res.status(422).json(error);
         }
