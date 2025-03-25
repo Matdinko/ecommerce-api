@@ -1,6 +1,7 @@
 import express from 'express';
 import productsRouter from './routes/products.js';
 import mongoose from 'mongoose';
+import userRouter from './routes/users.js';
 
 
 // Make database connection
@@ -15,6 +16,7 @@ app.use(express.json());
 
 // use routes
 app.use(productsRouter);
+app.use(userRouter);
 
 // listen for incoming request 
 const port = process.env.PORT || 3100;

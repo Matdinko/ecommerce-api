@@ -4,6 +4,7 @@ import {
   countProducts,
   deleteProduct,
   getProducts,
+  replaceProduct,
   updateProduct,
 } from "../controllers/products.js";
 import {
@@ -12,6 +13,7 @@ import {
   productPicturesUpload,
   remoteUpload,
 } from "../middlewares/upload.js";
+import { isAuthenticated, isAuthorized } from "../middlewares/auth.js";
 
 // Create product router
 const productsRouter = Router();
@@ -19,6 +21,8 @@ const productsRouter = Router();
 // Define routes
 productsRouter.post(
   "/products",
+  isAuthenticated,
+  isAuthorized(['superadmin', 'admin']),
 //   productImageUpload.single("image"),
   productPicturesUpload.array("pictures", 3),
   addProduct
@@ -28,9 +32,11 @@ productsRouter.get("/products", getProducts);
 
 productsRouter.get("/products/counts", countProducts);
 
-productsRouter.patch("/products/:id", updateProduct);
+productsRouter.patch("/products/:id", isAuthenticated, updateProduct);
 
-productsRouter.delete("/products/:id", deleteProduct);
+productsRouter.put("/products/:id", isAuthenticated, productPicturesUpload.array("pictures", 3), replaceProduct);
+
+productsRouter.delete("/products/:id", isAuthenticated, deleteProduct);
 
 // Export router
 export default productsRouter;

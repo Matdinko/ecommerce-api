@@ -1,14 +1,15 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, Types } from "mongoose";
 import normalize from 'normalize-mongoose';
 
 
 const productSchema = new Schema({
-    name: { type: String, required: true, unique: true },
+    name: { type: String, required: true, unique: [true, 'Product name must be unique!'] },
     price: { type: Number, required:true },
     description: { type: String, required: true },
     // image: { type: String, required: true },
     quantity: { type: Number, required: true },
-    pictures: [{ type: String, required: true }]
+    pictures: [{ type: String, required: true }],
+    userId: { type: Types.ObjectId, required: true, ref: 'User' }
 }, {
     timestamps: true
 });
