@@ -5,8 +5,8 @@ export const mailTransport = createTransport({
     port: 587 ,
     secure: false,
     auth: {
-        user: 'matthewdinko8@gmail.com',
-        pass: 'mdou ncpg grtn kbpz'
+        user: process.env.USER_EMAIL,
+        pass: process.env.USER_PASS
     }
 });
 

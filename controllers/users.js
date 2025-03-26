@@ -86,7 +86,13 @@ export const loginUser = async (req, res, next) => {
         { expiresIn: '24h' }
     )
     // Return response 
-    res.status(200).json({ accessToken });
+    res.status(200).json({ 
+        accessToken,
+        user: {
+            role: user.role,
+            email: user.email
+        },
+     });
 }
 
 export const updateUser = async (req, res, next) => {
